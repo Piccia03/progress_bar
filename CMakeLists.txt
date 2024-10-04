@@ -13,6 +13,8 @@ add_executable(progress_bar
         MyApp.h
         MyFrame.h
         MyApp.cpp
-        MyFrame.cpp)
+        MyFrame.cpp
+        FileTransfer.h
+        FileTransfer.cpp)
 
 target_link_libraries(progress_bar ${wxWidgets_LIBRARIES})
