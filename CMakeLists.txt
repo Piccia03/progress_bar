@@ -3,4 +3,6 @@ project(progress_bar)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(progress_bar main.cpp)
+add_executable(progress_bar main.cpp
+        Subject.h
+        Observer.h)
