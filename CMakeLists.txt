@@ -7,14 +7,16 @@ set(CMAKE_CXX_STANDARD 17)
 find_package(wxWidgets REQUIRED net gl core base)
 include(${wxWidgets_USE_FILE})
 
-add_executable(progress_bar
-        Subject.h
+# UNIT TESTING
+add_subdirectory(test)
+set(SOURCE_FILES Subject.h
         Observer.h
-        MyApp.h
         MyFrame.h
-        MyApp.cpp
         MyFrame.cpp
         FileTransfer.h
-        FileTransfer.cpp)
+        FileTransfer.cpp
+)
 
-target_link_libraries(progress_bar ${wxWidgets_LIBRARIES})
+add_executable(progress_bar MyApp.cpp MyApp.h)
+add_library(core ${SOURCE_FILES})
+target_link_libraries(progress_bar ${wxWidgets_LIBRARIES} core)
