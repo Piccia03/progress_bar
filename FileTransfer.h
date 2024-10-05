@@ -11,13 +11,15 @@
 
 class FileTransfer : public Subject {
 public:
-    virtual void registerObserver(Observer *o) override;
-    virtual void removeObserver(Observer *o) override;
-    virtual void notifyObservers() const override;
+    void registerObserver(Observer *o) override;
+    void removeObserver(Observer *o) override;
+    void notifyObservers() const override;
+
+    bool transferFile(const std::string &sourceFilePath, const std::string &destinationFilePath);
+
 
 private:
     std::list<Observer *> observers;
-    int data = 0;
 };
 
 #endif //PROGRESS_BAR_MODEL_H

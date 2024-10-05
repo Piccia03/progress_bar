@@ -9,6 +9,6 @@ protected:
     virtual ~Observer() = default;
 
 public:
-    virtual void update(int value) = 0;
+    virtual void update() = 0;
 };
 #endif //PROGRESS_BAR_OBSERVER_H
