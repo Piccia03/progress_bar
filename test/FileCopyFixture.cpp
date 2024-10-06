@@ -3,13 +3,13 @@
 //
 
 #include "gtest/gtest.h"
-#include "../FileTransfer.h"
+#include "../FileCopy.h"
 #include <fstream>
 #include <filesystem>
 
 
 
-class FileTransferSuite : public ::testing::Test {
+class FileCopySuite : public ::testing::Test {
 
 protected:
     virtual void SetUp() {
@@ -26,9 +26,9 @@ protected:
     
 };
 
-TEST_F(FileTransferSuite, FileCopyOK) {
-    FileTransfer transfer;
-    transfer.transferFile("testFileSource.txt", "testFileDestination.txt");
+TEST_F(FileCopySuite, FileCopyOK) {
+    FileCopy copy;
+    copy.fileCopy("testFileSource.txt", "testFileDestination.txt");
 
     std::ifstream sourceFile("testFileSource.txt", std::ios::binary);
     std::ifstream destinationFile("testFileDestination.txt", std::ios::binary);

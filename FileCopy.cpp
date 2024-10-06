@@ -2,24 +2,24 @@
 // Created by Francesco Impicciatore on 04/10/24.
 //
 #include <fstream>
-#include "FileTransfer.h"
+#include "FileCopy.h"
 #include "Observer.h"
 
-void FileTransfer::registerObserver(Observer *o) {
+void FileCopy::registerObserver(Observer *o) {
     observers.push_back(o);
 }
 
-void FileTransfer::removeObserver(Observer *o) {
+void FileCopy::removeObserver(Observer *o) {
     observers.remove(o);
 }
 
-void FileTransfer::notifyObservers() const {
+void FileCopy::notifyObservers() const {
     for (auto &observer : observers) {
         observer->update();
     }
 }
 
-bool FileTransfer::transferFile(const std::string &sourceFilePath, const std::string &destinationFilePath) {
+bool FileCopy::fileCopy(const std::string &sourceFilePath, const std::string &destinationFilePath) {
     std::ifstream sourceFile(sourceFilePath, std::ios::binary);
     if(!sourceFile.is_open()) {
         wxLogError("Cannot open source file");

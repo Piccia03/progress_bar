@@ -9,13 +9,13 @@
 #define PROGRESS_BAR_MODEL_H
 
 
-class FileTransfer : public Subject {
+class FileCopy : public Subject {
 public:
     void registerObserver(Observer *o) override;
     void removeObserver(Observer *o) override;
     void notifyObservers() const override;
 
-    bool transferFile(const std::string &sourceFilePath, const std::string &destinationFilePath);
+    bool fileCopy(const std::string &sourceFilePath, const std::string &destinationFilePath);
 
 
 private:

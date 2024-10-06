@@ -13,8 +13,8 @@ set(SOURCE_FILES Subject.h
         Observer.h
         MyFrame.h
         MyFrame.cpp
-        FileTransfer.h
-        FileTransfer.cpp
+        FileCopy.h
+        FileCopy.cpp
 )
 
 add_executable(progress_bar MyApp.cpp MyApp.h)
