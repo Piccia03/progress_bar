@@ -33,9 +33,9 @@ bool FileTransfer::transferFile(const std::string &sourceFilePath, const std::st
     }
 
     // get length of file:
-    sourceFile.seekg(0, sourceFile.end);
+    sourceFile.seekg(0, std::ifstream::end);
     std::streamsize size = sourceFile.tellg();
-    sourceFile.seekg(0, sourceFile.beg);
+    sourceFile.seekg(0, std::ifstream::beg);
 
     const std::streamsize bufferSize = 1024; // 1KB
     char buffer[bufferSize];
