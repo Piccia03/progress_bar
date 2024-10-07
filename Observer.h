@@ -6,7 +6,7 @@
 #define PROGRESS_BAR_OBSERVER_H
 class Observer {
 protected:
-    virtual ~Observer() = default;
+    virtual ~Observer();
 
 public:
     virtual void update() = 0;

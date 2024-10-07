@@ -11,8 +11,8 @@ include(${wxWidgets_USE_FILE})
 add_subdirectory(test)
 set(SOURCE_FILES Subject.h
         Observer.h
-        MyFrame.h
-        MyFrame.cpp
+        BarFrame.h
+        BarFrame.cpp
         FileCopy.h
         FileCopy.cpp
 )

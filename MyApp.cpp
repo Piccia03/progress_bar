@@ -2,10 +2,10 @@
 // Created by Francesco Impicciatore on 04/10/24.
 //
 #include "MyApp.h"
-#include "MyFrame.h"
+#include "BarFrame.h"
 
 bool MyApp::OnInit() {
-    MyFrame *frame = new MyFrame();
+    BarFrame *frame = new BarFrame();
     frame->Show();
     return true;
 }

@@ -46,7 +46,7 @@ bool FileCopy::fileCopy(const std::string &sourceFilePath, const std::string &de
         destinationFile.write(buffer, sourceFile.gcount());
         notifyObservers(); //todo: implement update method
 
-        //simulate slow transfer
+        //simulate slow copy
         wxMilliSleep(100);
     }
 
