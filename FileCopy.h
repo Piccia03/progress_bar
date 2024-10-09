@@ -15,11 +15,14 @@ public:
     void removeObserver(Observer *o) override;
     void notifyObservers() const override;
 
+    int getProgress() const;
+
     bool fileCopy(const std::string &sourceFilePath, const std::string &destinationFilePath);
 
 
 private:
     std::list<Observer *> observers;
+    int progress = 0;
 };
 
 #endif //PROGRESS_BAR_MODEL_H

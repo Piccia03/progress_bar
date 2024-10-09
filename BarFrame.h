@@ -6,15 +6,18 @@
 #include <wx/wx.h>
 #include "Observer.h"
 #include "FileCopy.h"
+
 class BarFrame: public wxFrame, public Observer {
 public:
-    BarFrame();
+    BarFrame(FileCopy *fileCopy);
     void update() override;
+    void onSelectionSurceFile(wxCommandEvent &event);
 
     ~BarFrame() override;
 
 private:
     FileCopy *fileCopy;
+    wxGauge *progressBar;
 };
 
 enum {

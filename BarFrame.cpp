@@ -1,37 +1,43 @@
 //
 // Created by Francesco Impicciatore on 04/10/24.
 //
+
 #include "BarFrame.h"
-BarFrame::BarFrame() : wxFrame(nullptr, wxID_ANY, "Hello World") {
-    wxMenu *menuFile = new wxMenu;
-    menuFile->Append(ID_Hello, "&Hello...\tCtrl-H", "Help string shown in status bar for this menu item");
-    menuFile->AppendSeparator();
-    menuFile->Append(wxID_EXIT);
+#include "FileCopy.h"
+#include <wx/wx.h>
 
-    wxMenu *menuHelp = new wxMenu;
-    menuHelp->Append(wxID_ABOUT);
+BarFrame::BarFrame(FileCopy *fileCopy) : wxFrame(nullptr, wxID_ANY, "Progress Bar", wxDefaultPosition, wxSize(300, 100)), fileCopy(fileCopy) {
 
-    wxMenuBar *menuBar = new wxMenuBar;
-    menuBar->Append(menuFile, "&File");
-    menuBar->Append(menuHelp, "&Help");
+    wxPanel* panel = new wxPanel(this, wxID_ANY);
+    wxBoxSizer *vbox = new wxBoxSizer(wxVERTICAL);
 
-    SetMenuBar(menuBar);
+    wxButton *sourceFileButton = new wxButton(panel, wxID_ANY, "Select source file");
+    sourceFileButton->Bind(wxEVT_BUTTON, &BarFrame::onSelectionSurceFile, this);
+    vbox->Add(sourceFileButton, 0, wxEXPAND | wxALL, 5);
 
-    CreateStatusBar();
-    SetStatusText("Welcome to wxWidgets!");
-    Bind(wxEVT_MENU, &BarFrame::onHello, this, ID_Hello);
-    Bind(wxEVT_MENU, &BarFrame::onExit, this, wxID_EXIT);
-    Bind(wxEVT_MENU, &BarFrame::onAbout, this, wxID_ABOUT);
+    progressBar = new wxGauge(panel, wxID_ANY, 100, wxDefaultPosition, wxDefaultSize, wxGA_HORIZONTAL);
+    vbox->Add(progressBar, 1, wxEXPAND | wxALL, 5);
+
+    panel->SetSizer(vbox);
 }
 
-void BarFrame::onHello(wxCommandEvent &event) {
-    wxLogMessage("Hello world from wxWidgets!");
+void BarFrame::update() {
+    progressBar->SetValue(fileCopy->getProgress());
 }
 
-void BarFrame::onExit(wxCommandEvent &event) {
-    Close(true);
-}
+void BarFrame::onSelectionSurceFile(wxCommandEvent &event) {
+    wxFileDialog openFileDialog(this, "Open source file", "", "", "All files (*.*)|*.*", wxFD_OPEN | wxFD_FILE_MUST_EXIST);
+    if (openFileDialog.ShowModal() == wxID_CANCEL) {
+        return;
+    }
 
-void BarFrame::onAbout(wxCommandEvent &event) {
-    wxMessageBox("This is a wxWidgets' Hello world sample", "About Hello World", wxOK | wxICON_INFORMATION);
+    wxString sourceFilePath = openFileDialog.GetPath();
+    wxFileDialog saveFileDialog(this, "Save destination file", "", "", "All files (*.*)|*.*", wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
+    if (saveFileDialog.ShowModal() == wxID_CANCEL) {
+        return;
+    }
+
+    wxString destinationFilePath = saveFileDialog.GetPath();
+
+    fileCopy->fileCopy(sourceFilePath.ToStdString(), destinationFilePath.ToStdString());
 }
