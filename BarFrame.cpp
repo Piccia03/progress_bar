@@ -6,7 +6,11 @@
 #include "FileCopy.h"
 #include <wx/wx.h>
 
+wxDEFINE_EVENT(wxEVT_UPDATE_PROGRESS, wxThreadEvent);
+
 BarFrame::BarFrame(FileCopy *fileCopy) : wxFrame(nullptr, wxID_ANY, "Progress Bar", wxDefaultPosition, wxSize(300, 100)), fileCopy(fileCopy) {
+
+    fileCopy->registerObserver(this);
 
     wxPanel* panel = new wxPanel(this, wxID_ANY);
     wxBoxSizer *vbox = new wxBoxSizer(wxVERTICAL);
@@ -19,10 +23,18 @@ BarFrame::BarFrame(FileCopy *fileCopy) : wxFrame(nullptr, wxID_ANY, "Progress Ba
     vbox->Add(progressBar, 1, wxEXPAND | wxALL, 5);
 
     panel->SetSizer(vbox);
+
+    Bind(wxEVT_UPDATE_PROGRESS, &BarFrame::onUpdateProgress, this);
 }
 
 void BarFrame::update() {
-    progressBar->SetValue(fileCopy->getProgress());
+    wxThreadEvent *event = new wxThreadEvent(wxEVT_UPDATE_PROGRESS);
+    event->SetInt(fileCopy->getProgress());
+    wxQueueEvent(this, event);
+}
+
+void BarFrame::onUpdateProgress(wxThreadEvent &event) {
+    progressBar->SetValue(event.GetInt());
 }
 
 void BarFrame::onSelectionSurceFile(wxCommandEvent &event) {
@@ -39,5 +51,16 @@ void BarFrame::onSelectionSurceFile(wxCommandEvent &event) {
 
     wxString destinationFilePath = saveFileDialog.GetPath();
 
-    fileCopy->fileCopy(sourceFilePath.ToStdString(), destinationFilePath.ToStdString());
+    // Esegui la copia del file in un thread separato
+    fileCopyThread = std::thread([this, sourceFilePath, destinationFilePath]() {
+        fileCopy->fileCopy(sourceFilePath.ToStdString(), destinationFilePath.ToStdString());
+        wxQueueEvent(this, new wxCommandEvent(wxEVT_COMMAND_TEXT_UPDATED));
+    });
+
+    fileCopyThread.detach();
+
+}
+
+BarFrame::~BarFrame() {
+    fileCopy->removeObserver(this);
 }

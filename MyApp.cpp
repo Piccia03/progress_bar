@@ -5,8 +5,9 @@
 #include "BarFrame.h"
 
 bool MyApp::OnInit() {
-    BarFrame *frame = new BarFrame();
-    frame->Show();
+    FileCopy *fileCopy = new FileCopy();
+    BarFrame *barFrame = new BarFrame(fileCopy);
+    barFrame->Show(true);
     return true;
 }
 wxIMPLEMENT_APP(MyApp);

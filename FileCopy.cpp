@@ -4,6 +4,7 @@
 #include <fstream>
 #include "FileCopy.h"
 
+
 void FileCopy::registerObserver(Observer *o) {
     observers.push_back(o);
 }
@@ -36,7 +37,7 @@ bool FileCopy::fileCopy(const std::string &sourceFilePath, const std::string &de
     std::streamsize size = sourceFile.tellg();
     sourceFile.seekg(0, std::ifstream::beg);
 
-    const std::streamsize bufferSize = 1024; // 1KB
+    const std::streamsize bufferSize = 32;
     char buffer[bufferSize];
     std::streamsize bytesRead = 0;
 
@@ -44,7 +45,7 @@ bool FileCopy::fileCopy(const std::string &sourceFilePath, const std::string &de
         bytesRead += sourceFile.gcount();
         destinationFile.write(buffer, sourceFile.gcount());
         progress = (int) (bytesRead * 100 / size);
-        notifyObservers(); //todo: implement update method
+        notifyObservers();
 
         //simulate slow copy
         wxMilliSleep(100);
@@ -55,7 +56,7 @@ bool FileCopy::fileCopy(const std::string &sourceFilePath, const std::string &de
         bytesRead += sourceFile.gcount();
         destinationFile.write(buffer, sourceFile.gcount());
         progress = (int) (bytesRead * 100 / size);
-        notifyObservers(); //todo: implement update method
+        notifyObservers();
     }
 
     sourceFile.close();

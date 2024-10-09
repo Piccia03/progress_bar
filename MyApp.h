@@ -12,4 +12,5 @@ public:
     bool OnInit() override;
 };
 
+
 #endif //PROGRESS_BAR_MYAPP_H
