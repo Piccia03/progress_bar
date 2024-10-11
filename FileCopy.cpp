@@ -67,3 +67,7 @@ bool FileCopy::fileCopy(const std::string &sourceFilePath, const std::string &de
 int FileCopy::getProgress() const {
     return progress;
 }
+
+void FileCopy::setProgress(int value) {
+    FileCopy::progress = value;
+}

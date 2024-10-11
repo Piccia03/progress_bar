@@ -19,6 +19,7 @@ public:
 
     bool fileCopy(const std::string &sourceFilePath, const std::string &destinationFilePath);
 
+    void setProgress(int value);
 
 private:
     std::list<Observer *> observers;

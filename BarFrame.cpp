@@ -73,6 +73,10 @@ void BarFrame::onSelectionSourceFile(wxCommandEvent &event) {
     fileCopyThread.detach();
 }
 
+int BarFrame::getProgressBarValue() const {
+    return progressBar->GetValue();
+}
+
 BarFrame::~BarFrame() {
     fileCopy->removeObserver(this);
 }

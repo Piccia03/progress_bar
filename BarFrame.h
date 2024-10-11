@@ -17,6 +17,9 @@ public:
 
     ~BarFrame() override;
 
+    int getProgressBarValue() const;
+
+
 private:
     FileCopy *fileCopy;
     wxGauge *progressBar;
