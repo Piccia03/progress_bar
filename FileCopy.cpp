@@ -37,7 +37,7 @@ bool FileCopy::fileCopy(const std::string &sourceFilePath, const std::string &de
     std::streamsize size = sourceFile.tellg();
     sourceFile.seekg(0, std::ifstream::beg);
 
-    const std::streamsize bufferSize = 32;
+    const std::streamsize bufferSize = 1024;
     char buffer[bufferSize];
     std::streamsize bytesRead = 0;
 

@@ -12,7 +12,7 @@ class BarFrame: public wxFrame, public Observer {
 public:
     BarFrame(FileCopy *fileCopy);
     void update() override;
-    void onSelectionSurceFile(wxCommandEvent &event);
+    void onSelectionSourceFile(wxCommandEvent &event);
     void onUpdateProgress(wxThreadEvent &event);
 
     ~BarFrame() override;
