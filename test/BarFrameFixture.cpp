@@ -27,7 +27,6 @@ protected:
     }
 
     void TearDown() override {
-        frame->Destroy();
         delete fileCopy;
         wxEntryCleanup();
         delete app;
@@ -37,20 +36,20 @@ protected:
 TEST_F(BarFrameSuite, ProgressBarUpdatesCorrectly) {
     fileCopy->setProgress(50);
     fileCopy->notifyObservers();
-
-    EXPECT_EQ(frame->getProgressBarValue(), 50);
+    int value = frame->getProgressBarValue();
+    EXPECT_EQ(value, 50);
 
     fileCopy->setProgress(80);
     fileCopy->notifyObservers();
-    EXPECT_EQ(frame->getProgressBarValue(), 80);
+    value = frame->getProgressBarValue();
+    EXPECT_EQ(value, 80);
+
 }
 
 TEST_F(BarFrameSuite, DialogAppearsOnCompletion) {
-    // Simulate file copy completion
     fileCopy->setProgress(100);
-    frame->update();
+    fileCopy->notifyObservers();
 
-    // Check if the dialog appears
     wxMessageDialog* dialog = new wxMessageDialog(frame, "File copied", "Info", wxOK | wxICON_INFORMATION);
     EXPECT_EQ(dialog->ShowModal(), wxID_OK);
     delete dialog;

@@ -64,13 +64,8 @@ void BarFrame::onSelectionSourceFile(wxCommandEvent &event) {
         sourceFileButton->Disable();
     }
 
-    // Esegui la copia del file in un thread separato
-    fileCopyThread = std::thread([this, sourceFilePath, destinationFilePath]() {
-        fileCopy->fileCopy(sourceFilePath.ToStdString(), destinationFilePath.ToStdString());
-        wxQueueEvent(this, new wxCommandEvent(wxEVT_COMMAND_TEXT_UPDATED));
-    });
+    fileCopy -> fileCopy(sourceFilePath.ToStdString(), destinationFilePath.ToStdString());
 
-    fileCopyThread.detach();
 }
 
 int BarFrame::getProgressBarValue() const {

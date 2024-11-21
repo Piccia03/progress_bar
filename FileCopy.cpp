@@ -16,6 +16,7 @@ void FileCopy::removeObserver(Observer *o) {
 void FileCopy::notifyObservers() const {
     for (auto &observer : observers) {
         observer->update();
+        wxYield();
     }
 }
 

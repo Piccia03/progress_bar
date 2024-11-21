@@ -5,8 +5,8 @@
 #include "BarFrame.h"
 
 bool MyApp::OnInit() {
-    FileCopy *fileCopy = new FileCopy();
-    BarFrame *barFrame = new BarFrame(fileCopy);
+    auto *fileCopy = new FileCopy();
+    auto *barFrame = new BarFrame(fileCopy);
     barFrame->Show(true);
     return true;
 }
