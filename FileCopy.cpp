@@ -72,3 +72,7 @@ int FileCopy::getProgress() const {
 void FileCopy::setProgress(int value) {
     FileCopy::progress = value;
 }
+
+FileCopy::~FileCopy() {
+    observers.clear();
+}

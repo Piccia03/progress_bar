@@ -6,7 +6,7 @@
 #include "FileCopy.h"
 #include <wx/wx.h>
 
-wxDEFINE_EVENT(wxEVT_UPDATE_PROGRESS, wxThreadEvent);
+//wxDEFINE_EVENT(wxEVT_UPDATE_PROGRESS, wxThreadEvent);
 
 BarFrame::BarFrame(FileCopy *fileCopy) : wxFrame(nullptr, wxID_ANY, "Progress Bar", wxDefaultPosition, wxSize(300, 100)), fileCopy(fileCopy) {
 
@@ -24,23 +24,16 @@ BarFrame::BarFrame(FileCopy *fileCopy) : wxFrame(nullptr, wxID_ANY, "Progress Ba
 
     panel->SetSizer(vbox);
 
-    Bind(wxEVT_UPDATE_PROGRESS, &BarFrame::onUpdateProgress, this);
 }
+
+
 
 void BarFrame::update() {
-    wxThreadEvent *event = new wxThreadEvent(wxEVT_UPDATE_PROGRESS);
-    event->SetInt(fileCopy->getProgress());
-    wxQueueEvent(this, event);
-}
-
-void BarFrame::onUpdateProgress(wxThreadEvent &event) {
-    int progress = event.GetInt();
+    int progress = fileCopy->getProgress();
     progressBar->SetValue(progress);
     if (progress == 100) {
-        wxMessageDialog *dialog = new wxMessageDialog(this, "File copied", "Info", wxOK | wxICON_INFORMATION);
-        if (dialog->ShowModal() == wxID_OK) {
-            Close(true);
-        }
+        wxMessageBox("File copied", "Info", wxOK | wxICON_INFORMATION, this);
+        Close(true);
     }
 }
 

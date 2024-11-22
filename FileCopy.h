@@ -11,6 +11,8 @@
 
 class FileCopy : public Subject {
 public:
+
+    ~FileCopy() override;
     void registerObserver(Observer *o) override;
     void removeObserver(Observer *o) override;
     void notifyObservers() const override;
