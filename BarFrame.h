@@ -13,7 +13,6 @@ public:
     BarFrame(FileCopy *fileCopy);
     void update() override;
     void onSelectionSourceFile(wxCommandEvent &event);
-    void onUpdateProgress(wxThreadEvent &event);
 
     ~BarFrame() override;
 
@@ -24,5 +23,6 @@ private:
     FileCopy *fileCopy;
     wxGauge *progressBar;
     std::thread fileCopyThread;
+    wxButton *sourceFileButton;
 };
 #endif //PROGRESS_BAR_BARFRAME_H

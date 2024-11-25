@@ -58,6 +58,7 @@ bool FileCopy::fileCopy(const std::string &sourceFilePath, const std::string &de
         destinationFile.write(buffer, sourceFile.gcount());
         progress = (int) (bytesRead * 100 / size);
         notifyObservers();
+
     }
 
     sourceFile.close();

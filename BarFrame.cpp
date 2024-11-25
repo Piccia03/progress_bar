@@ -6,7 +6,7 @@
 #include "FileCopy.h"
 #include <wx/wx.h>
 
-//wxDEFINE_EVENT(wxEVT_UPDATE_PROGRESS, wxThreadEvent);
+
 
 BarFrame::BarFrame(FileCopy *fileCopy) : wxFrame(nullptr, wxID_ANY, "Progress Bar", wxDefaultPosition, wxSize(300, 100)), fileCopy(fileCopy) {
 
@@ -15,7 +15,7 @@ BarFrame::BarFrame(FileCopy *fileCopy) : wxFrame(nullptr, wxID_ANY, "Progress Ba
     wxPanel* panel = new wxPanel(this, wxID_ANY);
     wxBoxSizer *vbox = new wxBoxSizer(wxVERTICAL);
 
-    wxButton *sourceFileButton = new wxButton(panel, wxID_ANY, "Select source file");
+    sourceFileButton = new wxButton(panel, wxID_ANY, "Select source file");
     sourceFileButton->Bind(wxEVT_BUTTON, &BarFrame::onSelectionSourceFile, this);
     vbox->Add(sourceFileButton, 0, wxEXPAND | wxALL, 5);
 
@@ -33,7 +33,8 @@ void BarFrame::update() {
     progressBar->SetValue(progress);
     if (progress == 100) {
         wxMessageBox("File copied", "Info", wxOK | wxICON_INFORMATION, this);
-        Close(true);
+        progressBar->SetValue(0);
+        sourceFileButton->Enable();
     }
 }
 
@@ -52,10 +53,7 @@ void BarFrame::onSelectionSourceFile(wxCommandEvent &event) {
     wxString destinationFilePath = saveFileDialog.GetPath();
 
     //disable the button after file selection
-    wxButton* sourceFileButton = dynamic_cast<wxButton*>(event.GetEventObject());
-    if (sourceFileButton) {
         sourceFileButton->Disable();
-    }
 
     fileCopy -> fileCopy(sourceFilePath.ToStdString(), destinationFilePath.ToStdString());
 
@@ -68,3 +66,5 @@ int BarFrame::getProgressBarValue() const {
 BarFrame::~BarFrame() {
     fileCopy->removeObserver(this);
 }
+
+
