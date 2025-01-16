@@ -63,6 +63,10 @@ int BarFrame::getProgressBarValue() const {
     return progressBar->GetValue();
 }
 
+bool BarFrame::isSourceFileButtonEnabled() const {
+    return sourceFileButton->IsEnabled();
+}
+
 BarFrame::~BarFrame() {
     fileCopy->removeObserver(this);
 }

@@ -17,6 +17,7 @@ public:
     ~BarFrame() override;
 
     int getProgressBarValue() const;
+    bool isSourceFileButtonEnabled() const;
 
 
 private:

@@ -27,30 +27,27 @@ protected:
     }
 
     void TearDown() override {
+        frame->Close(true);
+        delete frame;
         delete fileCopy;
-        wxEntryCleanup();
         delete app;
+        wxEntryCleanup();
     }
 };
 
 TEST_F(BarFrameSuite, ProgressBarUpdatesCorrectly) {
     fileCopy->setProgress(50);
     fileCopy->notifyObservers();
-    int value = frame->getProgressBarValue();
-    EXPECT_EQ(value, 50);
+    EXPECT_EQ(frame->getProgressBarValue(), 50);
 
     fileCopy->setProgress(80);
     fileCopy->notifyObservers();
-    value = frame->getProgressBarValue();
-    EXPECT_EQ(value, 80);
-
+    EXPECT_EQ(frame->getProgressBarValue(), 80);
 }
 
-TEST_F(BarFrameSuite, DialogAppearsOnCompletion) {
+TEST_F(BarFrameSuite, FileCopiedMessage) {
     fileCopy->setProgress(100);
     fileCopy->notifyObservers();
-
-    wxMessageDialog* dialog = new wxMessageDialog(frame, "File copied", "Info", wxOK | wxICON_INFORMATION);
-    EXPECT_EQ(dialog->ShowModal(), wxID_OK);
-    delete dialog;
+    EXPECT_EQ(frame->getProgressBarValue(), 0);
+    EXPECT_TRUE(frame->isSourceFileButtonEnabled());
 }
